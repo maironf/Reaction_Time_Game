@@ -1,0 +1,144 @@
+<html>
+
+    <head>
+        
+        <title>Reaction Timer</title>
+        
+        <style type="text/css">
+            
+            body {
+                background-color: lightblue;
+                font-family: sans-serif;
+                cursor: crosshair;
+            }
+        
+            #shape {
+                display: none;
+                position: relative;
+            }
+            
+            .bold {
+                
+                font-weight: bold;
+                
+            }
+
+            .bola-quadrada{
+                width:1200px;
+                height:500px;
+                background-color: white;
+
+                position: fixed;
+                border: solid 2px black;
+
+            }
+
+        </style>
+    
+    </head>
+
+    <body>
+        
+       <center> <h1>Dollynho Reaction Game</h1> </center>
+        
+        <center><p>Mate o dollynho antes que ele te mate. Tenha a média te tempo de reação menor que 1s e derrote o capiroto! <button onclick="appearAfterDelay()">Começar</button> </p></center>
+        <center> <p class="bold">Seu tempo: <span id="timeTaken"></span> Melhor Tempo:  <span id="bestTime"></span></p> </center>
+        <div class='bola-quadrada'>
+            <img src="fundo2.png" width="1200" height="500" />
+        </div>
+       
+        <div id="shape"></div>
+        
+        <script type="text/javascript">
+            var musica = new Audio('battle.mp3');
+            musica.volume = 0.1;
+            musica.play();
+            var start = new Date().getTime();
+                      
+            function myFunction(media) {
+                if(media<1.0){
+                    alert("Sua média ficou abaixo de 1.0,  Parabéns você derrotou o dollynho :) ");
+                }else{
+                    alert("Sua média ficou acima de 1.0, você perdeu :(");
+                }            
+
+            }
+
+            function makeShapeAppear() {
+                //faz aparecer
+                var top = Math.random() * 500;
+                var left = Math.random() * 900;
+                var width = (Math.random() * 200) + 100;
+    
+                if (Math.random() > 0.5) {
+                    
+                    document.getElementById("shape").style.borderRadius = "50%";
+                    
+                } else {
+                    
+                    document.getElementById("shape").style.borderRadius = "0";
+                    
+                }
+                
+
+                document.getElementById("shape").style.width = "110px";
+                document.getElementById("shape").style.height = "110px";
+                document.getElementById("shape").style.top =  top + "px";
+                document.getElementById("shape").style.left = left + "px";
+                document.getElementById("shape").style.display = "block";
+                
+                start = new Date().getTime();
+
+            }
+            
+            function appearAfterDelay() {
+                
+                setTimeout(makeShapeAppear, Math.random() * 1800);
+                
+            }
+            
+            var img = document.createElement("IMG");
+            img.src = "https://i.pinimg.com/originals/95/fe/a2/95fea23022dacd62be05c1f27e6fd791.png";
+            img.style.width = "110px";
+            img.style.height = "110px";
+            document.getElementById('shape').appendChild(img);
+            var bestTime = 99999.0;
+            var count = 0;
+            var media = 0;
+            var soma=0.0;
+            
+            
+            document.getElementById("shape").onclick = function() {
+                count = count + 1
+                var audio = new Audio('som.mp3');    
+                audio.volume = 1.0;
+                audio.play();
+                document.getElementById("shape").style.display = "none";
+                var end = new Date().getTime();
+                var timeTaken = (end - start) / 1000;
+                if(timeTaken<bestTime){
+                    bestTime = timeTaken;
+                }
+                document.getElementById("timeTaken").innerHTML = timeTaken + "s";
+                document.getElementById("bestTime").innerHTML = bestTime + "s";
+                soma = timeTaken+soma;
+                
+                if(count==10){
+                    media = soma/count;
+                    count = 0;
+                    bestTime = 99999.0;
+                    timeTaken = 0;
+                    soma=0.0;
+                    myFunction(media);
+                    document.getElementById("timeTaken").innerHTML = timeTaken + "s";
+                    document.getElementById("bestTime").innerHTML = "s";
+                }else{
+                    appearAfterDelay();
+                }
+            }
+            
+        </script>
+        
+    </body>
+
+</html>
