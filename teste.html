@@ -23,7 +23,7 @@
                 
             }
 
-            .bola-quadrada{
+            .square-screen{
                 width:1200px;
                 height:500px;
                 background-color: white;
@@ -43,7 +43,7 @@
         
         <center><p>Mate o dollynho antes que ele te mate. Tenha a média te tempo de reação menor que 1s e derrote o capiroto! <button onclick="appearAfterDelay()">Começar</button> </p></center>
         <center> <p class="bold">Seu tempo: <span id="timeTaken"></span> Melhor Tempo:  <span id="bestTime"></span></p> </center>
-        <div class='bola-quadrada'>
+        <div class='square-screen'>
             <img src="fundo2.png" width="1200" height="500" />
         </div>
        
@@ -54,20 +54,24 @@
             musica.volume = 0.1;
             musica.play();
             var start = new Date().getTime();
-                      
-            function myFunction(media) {
+                     
+            function myAlert(media) {
+                var string = null;
                 if(media<1.0){
-                    alert("Sua média ficou abaixo de 1.0,  Parabéns você derrotou o dollynho :) ");
+                    string = 'Sua média foi '+media.toString()+', Parabéns ficou abaixo de 1.0 e você derrotou o dollynho :) '
+                    alert(string);
                 }else{
-                    alert("Sua média ficou acima de 1.0, você perdeu :(");
+                    string = 'Sua média foi '+media.toString()+', Que pena, ficou acima de 1.0 e você foi derrotado pelo dollynho :('
+                    alert(string);
                 }            
 
             }
 
             function makeShapeAppear() {
                 //faz aparecer
+                //sorteia posições
                 var top = Math.random() * 500;
-                var left = Math.random() * 900;
+                var left = Math.random() * 1100;
                 var width = (Math.random() * 200) + 100;
     
                 if (Math.random() > 0.5) {
@@ -83,8 +87,13 @@
 
                 document.getElementById("shape").style.width = "110px";
                 document.getElementById("shape").style.height = "110px";
-                document.getElementById("shape").style.top =  top + "px";
+                if(top>395){
+                    document.getElementById("shape").style.top =  "395px";
+                }else{
+                    document.getElementById("shape").style.top =  top + "px";
+                }
                 document.getElementById("shape").style.left = left + "px";
+
                 document.getElementById("shape").style.display = "block";
                 
                 start = new Date().getTime();
@@ -129,7 +138,8 @@
                     bestTime = 99999.0;
                     timeTaken = 0;
                     soma=0.0;
-                    myFunction(media);
+                    myAlert(media);
+                    media = 0;
                     document.getElementById("timeTaken").innerHTML = timeTaken + "s";
                     document.getElementById("bestTime").innerHTML = "s";
                 }else{
